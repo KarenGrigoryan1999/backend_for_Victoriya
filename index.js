@@ -1,31 +1,19 @@
 const express = require('express');
 const { json } = require('express');
 
-const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Документация для Вики',
-            version: '1.0.0'
-        },
-    },
-    apis: ['./index.js']
-}
-const swaggerSpec = swaggerJSDocs(options);
-
 const app = express();
 
 app.use(json());
 
 const taskArray = ["Солнце", "Зайка", "Котик"];
 
-app.get('/all', (req, res) => {
+app.get('api/all', (req, res) => {
     return res.json({
         tasks: taskArray
     });
 })
 
-app.post('/add', (req, res) => {
+app.post('api/add', (req, res) => {
     const {text} = req.body;
 
     if(text) {
@@ -36,7 +24,7 @@ app.post('/add', (req, res) => {
     }
 })
 
-app.put('/edit/:number', (req, res) => {
+app.put('api/edit/:number', (req, res) => {
     const {number} = req.params;
     const {text} = req.body;
 
@@ -53,7 +41,7 @@ app.put('/edit/:number', (req, res) => {
     }
 })
 
-app.delete('/delete', (req, res) => {
+app.delete('api/delete', (req, res) => {
     const {number} = req.params;
 
     if(number && number > 0) {
